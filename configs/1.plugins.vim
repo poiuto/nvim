@@ -2,6 +2,10 @@ call plug#begin(base_dir.'/bundle')
 " gruvbox
 Plug 'morhetz/gruvbox'
 
+" airline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
 " highlight word under cursor
 Plug 'RRethy/vim-illuminate'
 " highlight match parentheses
@@ -33,10 +37,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mg979/vim-xtabline'
 "Plug 'ryanoasis/vim-devicons'
 
-" airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
 "nerd tree
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -55,4 +55,7 @@ Plug 'tpope/vim-fugitive'
 
 "prettier
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+
+" highlighted yank
+Plug 'machakann/vim-highlightedyank'
 call plug#end()

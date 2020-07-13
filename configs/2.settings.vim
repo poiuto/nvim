@@ -24,7 +24,7 @@ map <F3> :source ~/vim_session       " And load session with F3
 " Remap scrolling
 nnoremap <C-k> <C-u>
 nnoremap <C-j> <C-d>
-" remap changing splits
+" remap switching splits
 nnoremap gh <C-W><C-H>
 nnoremap gj <C-W><C-J>
 nnoremap gk <C-W><C-K>
@@ -40,7 +40,7 @@ set undoreload=10000
 set clipboard=unnamed
 set clipboard=unnamedplus
 
-"highlight when searching, remove the highlighting when enter insert mode
+"highlight search pattern matches
 set incsearch
 set hlsearch
 autocmd InsertEnter * :let @/=""

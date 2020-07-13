@@ -33,7 +33,6 @@ au Syntax * RainbowParenthesesLoadBraces
 " tabline
 autocmd VimEnter * XTabTheme seoul
 
-
 " nerdcommenter
 nnoremap ,c :call NERDComment(0,"toggle")<CR>
 vnoremap ,c :call NERDComment(0,"toggle")<CR>
@@ -55,7 +54,6 @@ let g:user_emmet_leader_key=','
 nmap <silent> ;; <Plug>(easymotion-overwin-f)
 nmap <silent> ;l <Plug>(easymotion-overwin-line)
 
-
 " Multiple Cursor
 let g:multi_cursor_use_default_mapping=0
 let g:multi_cursor_start_word_key      = '<C-d>'
@@ -71,3 +69,6 @@ let g:multi_cursor_quit_key            = '<Esc>'
 nnoremap <C-o> :CocList outline<CR>
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{StatusDiagnostic()}
+
+" highlighted yank
+let g:highlightedyank_highlight_duration = 500

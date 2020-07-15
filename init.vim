@@ -8,3 +8,4 @@ endfor
 
 " coc.nvim, remember to run this command
 ":CocInstall coc-json coc-tsserver
+":CocInstall coc-explorer

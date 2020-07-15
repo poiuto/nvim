@@ -34,8 +34,7 @@ Plug 'dense-analysis/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " buffers
-Plug 'mg979/vim-xtabline'
-"Plug 'ryanoasis/vim-devicons'
+"Plug 'mg979/vim-xtabline'
 
 "nerd tree
 Plug 'scrooloose/nerdtree'
@@ -56,6 +55,13 @@ Plug 'tpope/vim-fugitive'
 "prettier
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 
+" auto pairs
+Plug 'jiangmiao/auto-pairs'
+
 " highlighted yank
 Plug 'machakann/vim-highlightedyank'
+
+" devicons
+Plug 'ryanoasis/vim-devicons'
+
 call plug#end()

@@ -31,7 +31,7 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 " tabline
-autocmd VimEnter * XTabTheme seoul
+"autocmd VimEnter * XTabTheme seoul
 
 " nerdcommenter
 nnoremap ,c :call NERDComment(0,"toggle")<CR>
@@ -43,9 +43,20 @@ let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 let g:NERDTreeWinSize = 25
-nmap <silent> <C-N> :NERDTreeToggle<CR>
+nmap <silent> <space>e :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+augroup nerdtreeconcealbrackets
+      autocmd!
+      autocmd FileType nerdtree syntax match hideBracketsInNerdTree "\]" contained conceal containedin=ALL
+      autocmd FileType nerdtree syntax match hideBracketsInNerdTree "\[" contained conceal containedin=ALL
+      autocmd FileType nerdtree setlocal conceallevel=1
+      autocmd FileType nerdtree setlocal concealcursor=nvic
+augroup END
+
+" coc-explorer
+"nmap <space>e :CocCommand explorer<CR>
+"autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
 
 " ,, to trigger emmet
 let g:user_emmet_leader_key=','
@@ -55,15 +66,15 @@ nmap <silent> ;; <Plug>(easymotion-overwin-f)
 nmap <silent> ;l <Plug>(easymotion-overwin-line)
 
 " Multiple Cursor
-let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_start_word_key      = '<C-d>'
-let g:multi_cursor_select_all_word_key = '<C-L>'
-let g:multi_cursor_start_key           = 'g<C-d>'
-let g:multi_cursor_select_all_key      = 'g<C-L>'
-let g:multi_cursor_next_key            = '<C-d>'
-let g:multi_cursor_prev_key            = '<C-p>'
-let g:multi_cursor_skip_key            = '<C-i>'
-let g:multi_cursor_quit_key            = '<Esc>'
+"let g:multi_cursor_use_default_mapping=0
+"let g:multi_cursor_start_word_key      = '<C-d>'
+"let g:multi_cursor_select_all_word_key = '<C-L>'
+"let g:multi_cursor_start_key           = 'g<C-d>'
+"let g:multi_cursor_select_all_key      = 'g<C-L>'
+"let g:multi_cursor_next_key            = '<C-d>'
+"let g:multi_cursor_prev_key            = '<C-p>'
+"let g:multi_cursor_skip_key            = '<C-i>'
+"let g:multi_cursor_quit_key            = '<Esc>'
 
 " coc press Ctrl + O to jump to a symbol
 nnoremap <C-o> :CocList outline<CR>

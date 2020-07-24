@@ -9,16 +9,31 @@ autocmd BufWritePre *.js,*.ejs,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json
 
 " theme
 syntax enable
+if has('termguicolors')   " enable true color
+  set termguicolors
+endif
 set background=dark
 highlight Normal ctermbg=None
+"let g:gruvbox_original_background='medium'
 colorscheme gruvbox
-set termguicolors
 
 " airline
-" don't forget install powerline fonts
 set laststatus=2
 let g:airline_powerline_fonts = 1
-let g:airline_theme='base16'
+let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_tab_nr = 0
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#show_buffers = 0
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'b'    : '#W',
+      \'c'    : '#(whoami)',
+      \'win'  : ['#I', '#W'],
+      \'cwin' : ['#I', '#W', '#F'],
+      \'y'    : ['%R', '%a', '%d-%m-%Y'],
+      \'z'    : '#H'}
 
 " indent line
 let g:indentLine_color_term = 239
@@ -29,9 +44,6 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
-
-" tabline
-"autocmd VimEnter * XTabTheme seoul
 
 " nerdcommenter
 nnoremap ,c :call NERDComment(0,"toggle")<CR>

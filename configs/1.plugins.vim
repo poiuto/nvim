@@ -4,7 +4,8 @@ Plug 'morhetz/gruvbox'
 
 " airline
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+"tmux line
+Plug 'edkolev/tmuxline.vim'
 
 " highlight word under cursor
 Plug 'RRethy/vim-illuminate'

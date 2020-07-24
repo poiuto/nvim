@@ -1,3 +1,4 @@
 bundle/*
+!bundle/.gitkeep
 undo/*
 !undo/.gitkeep

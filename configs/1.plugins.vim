@@ -15,45 +15,39 @@ Plug 'kien/rainbow_parentheses.vim'
 " surrround
 Plug 'tpope/vim-surround'
 
-" ctrlP
-Plug 'kien/ctrlp.vim'
-
 " fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-"multiple cursors
+" multiple cursors
 Plug 'terryma/vim-multiple-cursors'
 
-"identLine
+" identLine
 Plug 'Yggdroot/indentLine'
 
-"ale
+"  ale
 Plug 'dense-analysis/ale'
 
-"coc.nvim
+"  coc.nvim
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" buffers
-"Plug 'mg979/vim-xtabline'
-
-"nerd tree
+"  nerd tree
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
-"nerdcommenter
+"  nerdcommenter
 Plug 'scrooloose/nerdcommenter'
 
-"emmet
+"  emmet
 Plug 'mattn/emmet-vim'
 
-"easymotion
+"  easymotion
 Plug 'easymotion/vim-easymotion'
 
 " git fugitive
 Plug 'tpope/vim-fugitive'
 
-"prettier
+" prettier
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 
 " auto pairs

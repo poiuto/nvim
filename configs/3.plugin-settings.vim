@@ -38,6 +38,7 @@ let g:tmuxline_preset = {
 " indent line
 let g:indentLine_color_term = 239
 let g:indentLine_char = '┆'
+let g:indentLine_fileTypeExclude = ['coc-explorer']
 
 " rainbow parenthese
 au VimEnter * RainbowParenthesesToggle
@@ -46,34 +47,17 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 " nerdcommenter
-nnoremap ,c :call NERDComment(0,"toggle")<CR>
-vnoremap ,c :call NERDComment(0,"toggle")<CR>
-
-"nerd tree
-nnoremap <silent> <Leader>v :NERDTreeFind<CR>
-let NERDTreeAutoDeleteBuffer = 1
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-let g:NERDTreeWinSize = 25
-nmap <silent> <space>e :NERDTreeToggle<CR>
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-augroup nerdtreeconcealbrackets
-      autocmd!
-      autocmd FileType nerdtree syntax match hideBracketsInNerdTree "\]" contained conceal containedin=ALL
-      autocmd FileType nerdtree syntax match hideBracketsInNerdTree "\[" contained conceal containedin=ALL
-      autocmd FileType nerdtree setlocal conceallevel=1
-      autocmd FileType nerdtree setlocal concealcursor=nvic
-augroup END
+nnoremap <Space>c :call NERDComment(0,"toggle")<CR>
+vnoremap <Space>c :call NERDComment(0,"toggle")<CR>
 
 " coc-explorer
-"nmap <space>e :CocCommand explorer<CR>
-"autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+nmap <space>e :CocCommand explorer<CR>
+autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
 
-" ,, to trigger emmet
-let g:user_emmet_leader_key=','
+" <Space>, to trigger emmet
+let g:user_emmet_leader_key='<Space>'
 
-" easymotion
+" easymotiog
 nmap <silent> ;; <Plug>(easymotion-overwin-f)
 nmap <silent> ;l <Plug>(easymotion-overwin-line)
 
@@ -95,3 +79,11 @@ set statusline^=%{coc#status()}%{StatusDiagnostic()}
 
 " highlighted yank
 let g:highlightedyank_highlight_duration = 500
+
+" fzf
+command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0) " invoke Rg, FZF + ripgrep will not consider filename as a match
+let g:fzf_layout = {'up':'~90%', 'window': { 'width': 0.8, 'height': 0.8,'yoffset':0.5,'xoffset': 0.5,  'border': 'sharp' } }
+" finding files
+nnoremap <silent> <Leader>f :Files<CR>
+" finding in files
+nnoremap <silent> <C-f> :Rg<CR>

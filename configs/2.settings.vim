@@ -7,6 +7,9 @@ set number relativenumber
 set mouse=a   " enable mouse for all mode
 filetype on
 
+" use ripgrep instead of grep
+set grepprg=rg\ --vimgrep\ --smart-case\ --follow
+
 " jj to normal mode
 inoremap jj <ESC>
 
@@ -14,8 +17,8 @@ inoremap jj <ESC>
 let g:Illuminate_delay = 200
 
 " Map leader key
-let mapleader = "," " map leader key to ,
-let g:mapleader = ","
+let mapleader = "\<Space>"
+let g:mapleader = "\<Space>"
 
 " save session
 map <F2> :mksession! ~/vim_session   " Quick write session with F2

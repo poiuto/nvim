@@ -1,7 +1,7 @@
 call plug#begin(base_dir.'/bundle')
 " gruvbox
 Plug 'morhetz/gruvbox'
-
+Plug 'nvim-treesitter/nvim-treesitter'
 " ejs
 "Plug 'briancollins/vim-jst'
 "Plug 'pangloss/vim-javascript'

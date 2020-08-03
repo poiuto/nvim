@@ -2,10 +2,23 @@ call plug#begin(base_dir.'/bundle')
 " gruvbox
 Plug 'morhetz/gruvbox'
 
-" airline
-Plug 'vim-airline/vim-airline'
-"tmux line
+" ejs
+"Plug 'briancollins/vim-jst'
+"Plug 'pangloss/vim-javascript'
+
+" lightline
+Plug 'itchyny/lightline.vim'
+Plug 'itchyny/vim-gitbranch'
+Plug 'mhinz/vim-startify'
+Plug 'macthecadillac/lightline-gitdiff'
+Plug 'maximbaz/lightline-ale'
+Plug 'albertomontesg/lightline-asyncrun'
+Plug 'rmolin88/pomodoro.vim'
+" tmux line
 Plug 'edkolev/tmuxline.vim'
+
+"
+"Plug 'pangloss/vim-javascript'
 
 " highlight word under cursor
 Plug 'RRethy/vim-illuminate'
@@ -30,10 +43,6 @@ Plug 'dense-analysis/ale'
 
 "  coc.nvim
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-"  nerd tree
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 
 "  nerdcommenter
 Plug 'scrooloose/nerdcommenter'

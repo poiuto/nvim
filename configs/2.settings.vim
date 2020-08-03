@@ -13,22 +13,24 @@ set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 " jj to normal mode
 inoremap jj <ESC>
 
-" highlight words
-let g:Illuminate_delay = 200
+" map leader key
+let mapleader = " "
 
-" Map leader key
-let mapleader = "\<Space>"
-let g:mapleader = "\<Space>"
-
-" save session
-map <F2> :mksession! ~/vim_session   " Quick write session with F2
-map <F3> :source ~/vim_session       " And load session with F3
-
-" remap switching splits
+" remap switching and resizing splits
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
+nnoremap <Leader>> <C-W>>
+nnoremap <Leader>< <C-W><
+nnoremap <Leader>= <C-W>=
+
+" highlight words
+let g:Illuminate_delay = 200
+
+" save session
+map <F2> :mksession! ~/vim_session   " Quick write session with F2
+map <F3> :source ~/vim_session       " And load session with F3
 
 " Persistent undo
 " C:\Users\Admin\AppData\Local\nvim-data\undo for windows

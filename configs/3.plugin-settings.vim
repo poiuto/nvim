@@ -18,6 +18,102 @@ set expandtab
 
 "au BufRead,BufNewFile *.ejs      setf javascript.jsx
 
+" rainbow
+let g:rainbow_active = 1
+let g:rainbow_conf = {
+\	'guifgs': ['#fe8019', '#8ec07c', '#fb4934', '#98971a', '#fabd2f', '#83a589'],
+\}
+" for ejs file
+au BufRead,BufNewFile *.ejs set ft=html
+au BufRead,BufNewFile *.ejs set ft=mason
+
+" indent line
+let g:indentLine_color_term = 239
+let g:indentLine_char = '│'
+let g:indentLine_fileTypeExclude = ['coc-explorer', 'startify']
+
+" rainbow parenthese
+"au VimEnter * RainbowParenthesesToggle
+"au Syntax * RainbowParenthesesLoadRound
+"au Syntax * RainbowParenthesesLoadSquare
+"au Syntax * RainbowParenthesesLoadBraces
+
+" nerdcommenter
+nnoremap <Space>c :call NERDComment(0,"toggle")<CR>
+vnoremap <Space>c :call NERDComment(0,"toggle")<CR>
+
+" JS config
+let g:javascript_plugin_jsdoc = 1
+let g:polyglot_disabled = ['jsx', 'tsx', 'js', 'ts']
+let g:vim_jsx_pretty_template_tags = ['html', 'jsx', 'tsx']
+
+" coc-explorer
+nmap <Leader>e :CocCommand explorer<CR>
+autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+
+" ,, to trigger emmet
+let g:user_emmet_leader_key=','
+
+" easymotiog
+nmap <silent> ;; <Plug>(easymotion-overwin-f)
+nmap <silent> ;l <Plug>(easymotion-overwin-line)
+
+" Multiple Cursor
+"let g:multi_cursor_use_default_mapping=0
+"let g:multi_cursor_start_word_key      = '<C-d>'
+"let g:multi_cursor_select_all_word_key = '<C-L>'
+"let g:multi_cursor_start_key           = 'g<C-d>'
+"let g:multi_cursor_select_all_key      = 'g<C-L>'
+"let g:multi_cursor_next_key            = '<C-d>'
+"let g:multi_cursor_prev_key            = '<C-p>'
+"let g:multi_cursor_skip_key            = '<C-i>'
+"let g:multi_cursor_quit_key            = '<Esc>'
+
+" coc press Ctrl + O to jump to a symbol
+nnoremap <C-o> :CocList outline<CR>
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{StatusDiagnostic()}
+" Custom icon for coc.nvim statusline
+let g:coc_status_error_sign=""
+let g:coc_status_warning_sign=""
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" highlighted yank
+let g:highlightedyank_highlight_duration = 500
+
+" fzf
+command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0) " invoke Rg, FZF + ripgrep will not consider filename as a match
+let g:fzf_layout = { 'window': {
+      \ 'width': 0.9,
+      \ 'height': 0.7,
+      \ 'highlight': 'Comment',
+      \ 'rounded': v:false } }
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
+" finding files
+nnoremap <silent> <Leader>f :Files<CR>
+" finding inside files
+nnoremap <silent> <C-f> :Rg<CR>
+" finding buffers
+nnoremap <silent> <Leader>b :Buffers<CR>
+
+" treesitter
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+    highlight = {
+      enable = true,                    -- false will disable the whole extension
+      disable = { "rust" },        -- list of language that will be disabled
+      custom_captures = {               -- mapping of user defined captures to highlight groups
+        -- ["foo.bar"] = "Identifier"   -- highlight own capture @foo.bar with highlight group "Identifier", see :h nvim-treesitter-query-extensions
+      },
+    }
+}
+EOF
+highlight link TSPunctDelimiter Normal
+highlight link TSPunctBracket Normal
+
 " lightline
 "{{{lightline.vim
 "{{{lightline.vim-usage
@@ -107,7 +203,7 @@ let g:lightline#asyncrun#indicator_none = ''
 let g:lightline#asyncrun#indicator_run = 'Running...'
 let g:lightline.active = {
     \ 'left': [ [ 'mode', 'paste' ],
-    \           [ 'readonly', 'filename', 'modified', 'gitbranch', 'devicons_filetype' ] ],
+    \           [ 'readonly', 'filename', 'modified', 'devicons_filetype' ] ],
     \ 'right': [ [ 'lineinfo' ],
     \            [ 'fileformat', 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok', 'pomodoro' ],
     \           [ 'asyncrun_status', 'coc_status' ] ]
@@ -190,22 +286,32 @@ let g:lightline.component_visible_condition = {
       \ }
 "}}}
 " tmux line
-let g:airline#extensions#tmuxline#enabled = 0
-let g:tmuxline_preset = {
-      \'a'    : '#S',
-      \'b'    : '#W',
-      \'c'    : [ '#{sysstat_mem} #[fg=blue]\ufa51#{upload_speed}' ],
-      \'win'  : ['#I', '#W'],
-      \'cwin' : ['#I', '#W', '#F'],
-      \'x'    : [ "#[fg=blue]#{download_speed} \uf6d9 #{sysstat_cpu}" ],
-      \'y'    : ['%R', '%a', '%m/%d/%Y'],
-      \'z'    : '#H #{prefix_highlight}'}
-let g:tmuxline_separators = {
-      \ 'left' : "\ue0bc",
-      \ 'left_alt': "\ue0bd",
-      \ 'right' : "\ue0ba",
-      \ 'right_alt' : "\ue0bd",
-      \ 'space' : ' '}
+if executable('tmux') && filereadable(expand('~/.zshrc')) && $TMUX !=# ''
+  let g:vimIsInTmux = 1
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+else
+  let g:vimIsInTmux = 0
+endif
+if g:vimIsInTmux == 1
+  let g:airline#extensions#tmuxline#enabled = 0
+  let g:tmuxline_preset = {
+        \'a'    : '#S',
+        \'b'    : '#W',
+        \'c'    : [ '#{sysstat_mem} #[fg=blue]\ufa51#{upload_speed}' ],
+        \'win'  : ['#I', '#W'],
+        \'cwin' : ['#I', '#W', '#F'],
+        \'x'    : [ "#[fg=blue]#{download_speed} \uf6d9 #{sysstat_cpu}" ],
+        \'y'    : ['%R', '%a', '%m/%d/%Y'],
+        \'z'    : '#H #{prefix_highlight}'}
+  let g:tmuxline_separators = {
+        \ 'left' : "\ue0bc",
+        \ 'left_alt': "\ue0bd",
+        \ 'right' : "\ue0ba",
+        \ 'right_alt' : "\ue0bd",
+        \ 'space' : ' '}
+  au VimEnter * :Tmuxline lightline
+endif
 
 "let g:airline_powerline_fonts = 1
 "let g:airline#extensions#tabline#enabled = 1
@@ -214,82 +320,3 @@ let g:tmuxline_separators = {
 "let g:airline#extensions#tabline#show_tab_nr = 0
 "let g:airline#extensions#tabline#show_tab_type = 0
 "let g:airline#extensions#tabline#show_buffers = 0
-
-" indent line
-let g:indentLine_color_term = 239
-let g:indentLine_char = '│'
-let g:indentLine_fileTypeExclude = ['coc-explorer', 'startify']
-
-" rainbow parenthese
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
-
-" nerdcommenter
-nnoremap <Space>c :call NERDComment(0,"toggle")<CR>
-vnoremap <Space>c :call NERDComment(0,"toggle")<CR>
-
-" JS config
-let g:javascript_plugin_jsdoc = 1
-let g:polyglot_disabled = ['jsx', 'tsx', 'js', 'ts']
-let g:vim_jsx_pretty_template_tags = ['html', 'jsx', 'tsx']
-
-" coc-explorer
-nmap <Leader>e :CocCommand explorer<CR>
-autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
-
-" ,, to trigger emmet
-let g:user_emmet_leader_key=','
-
-" easymotiog
-nmap <silent> ;; <Plug>(easymotion-overwin-f)
-nmap <silent> ;l <Plug>(easymotion-overwin-line)
-
-" Multiple Cursor
-"let g:multi_cursor_use_default_mapping=0
-"let g:multi_cursor_start_word_key      = '<C-d>'
-"let g:multi_cursor_select_all_word_key = '<C-L>'
-"let g:multi_cursor_start_key           = 'g<C-d>'
-"let g:multi_cursor_select_all_key      = 'g<C-L>'
-"let g:multi_cursor_next_key            = '<C-d>'
-"let g:multi_cursor_prev_key            = '<C-p>'
-"let g:multi_cursor_skip_key            = '<C-i>'
-"let g:multi_cursor_quit_key            = '<Esc>'
-
-" coc press Ctrl + O to jump to a symbol
-nnoremap <C-o> :CocList outline<CR>
-" Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{StatusDiagnostic()}
-" Custom icon for coc.nvim statusline
-let g:coc_status_error_sign=""
-let g:coc_status_warning_sign=""
-
-" highlighted yank
-let g:highlightedyank_highlight_duration = 500
-
-" fzf
-command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0) " invoke Rg, FZF + ripgrep will not consider filename as a match
-let g:fzf_layout = { 'window': {
-      \ 'width': 0.9,
-      \ 'height': 0.7,
-      \ 'highlight': 'Comment',
-      \ 'rounded': v:false } }
-let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
-" finding files
-nnoremap <silent> <Leader>f :Files<CR>
-" finding in files
-nnoremap <silent> <C-f> :Rg<CR>
-
-" treesitter
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-    highlight = {
-      enable = true,                    -- false will disable the whole extension
-      disable = { "c", "rust" },        -- list of language that will be disabled
-      custom_captures = {               -- mapping of user defined captures to highlight groups
-        -- ["foo.bar"] = "Identifier"   -- highlight own capture @foo.bar with highlight group "Identifier", see :h nvim-treesitter-query-extensions
-      },
-    }
-}
-EOF

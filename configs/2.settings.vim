@@ -1,3 +1,5 @@
+" find . -type f -print0 | xargs -0 -n 1 -P 4 dos2unix
+
 set encoding=UTF-8
 set t_Co=256
 set hidden

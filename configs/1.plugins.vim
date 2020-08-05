@@ -2,6 +2,7 @@ call plug#begin(base_dir.'/bundle')
 " gruvbox
 Plug 'morhetz/gruvbox'
 Plug 'nvim-treesitter/nvim-treesitter'
+
 " ejs
 "Plug 'briancollins/vim-jst'
 "Plug 'pangloss/vim-javascript'
@@ -17,13 +18,11 @@ Plug 'rmolin88/pomodoro.vim'
 " tmux line
 Plug 'edkolev/tmuxline.vim'
 
-"
-"Plug 'pangloss/vim-javascript'
-
 " highlight word under cursor
 Plug 'RRethy/vim-illuminate'
 " highlight match parentheses
-Plug 'kien/rainbow_parentheses.vim'
+"Plug 'kien/rainbow_parentheses.vim'
+Plug 'luochen1990/rainbow'
 
 " surrround
 Plug 'tpope/vim-surround'

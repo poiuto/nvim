@@ -55,6 +55,8 @@ Plug 'easymotion/vim-easymotion'
 " git fugitive
 Plug 'tpope/vim-fugitive'
 
+Plug 'airblade/vim-gitgutter'
+
 " prettier
 Plug 'prettier/vim-prettier', { 'do': 'npm install' }
 

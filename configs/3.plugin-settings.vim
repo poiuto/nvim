@@ -16,6 +16,9 @@ let g:prettier#autoformat = 0
 autocmd BufWritePre *.js,*.ejs,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 set expandtab
 
+" highlight words
+let g:Illuminate_delay = 100
+
 "au BufRead,BufNewFile *.ejs      setf javascript.jsx
 
 " rainbow
@@ -69,17 +72,34 @@ nmap <silent> ;l <Plug>(easymotion-overwin-line)
 "let g:multi_cursor_skip_key            = '<C-i>'
 "let g:multi_cursor_quit_key            = '<Esc>'
 
-" coc press Ctrl + O to jump to a symbol
-nnoremap <C-o> :CocList outline<CR>
-" Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{StatusDiagnostic()}
+" coc
 " Custom icon for coc.nvim statusline
-let g:coc_status_error_sign=""
-let g:coc_status_warning_sign=""
+let g:coc_status_error_sign=" "
+let g:coc_status_warning_sign=" "
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+" coc press Ctrl + O to jump to a symbol
+nnoremap <C-o> :CocList outline<CR>
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{StatusDiagnostic()}
+
+" gitgutter
+let g:gitgutter_sign_added = ''
+let g:gitgutter_sign_modified = ''
+let g:gitgutter_sign_removed = ''
+let g:gitgutter_sign_removed_first_line = ''
+let g:gitgutter_sign_modified_removed = ''
+let g:gitgutter_override_sign_column_highlight = 1
+highlight GitGutterAdd guibg=bg
+highlight GitGutterChange guibg=bg
+highlight GitGutterDelete guibg=bg
+"highlight GitGutterAdd guifg=bg
+"highlight GitGutterChange guifg=bg
+"highlight GitGutterDelete guifg=bg
+highlight SignColumn guibg=bg
+highlight SignColumn ctermbg=bg
 
 " highlighted yank
 let g:highlightedyank_highlight_duration = 500

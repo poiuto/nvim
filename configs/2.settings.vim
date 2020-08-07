@@ -1,5 +1,3 @@
-" find . -type f -print0 | xargs -0 -n 1 -P 4 dos2unix
-
 set encoding=UTF-8
 set t_Co=256
 set hidden
@@ -27,12 +25,9 @@ nnoremap <Leader>> <C-W>>
 nnoremap <Leader>< <C-W><
 nnoremap <Leader>= <C-W>=
 
-" highlight words
-let g:Illuminate_delay = 200
-
 " save session
-map <F2> :mksession! ~/vim_session   " Quick write session with F2
-map <F3> :source ~/vim_session       " And load session with F3
+map <F2> :mksession! ~/vim_session<CR>   " Quick write session with F2
+map <F3> :source ~/vim_session<CR>       " And load session with F3
 
 " Persistent undo
 " C:\Users\Admin\AppData\Local\nvim-data\undo for windows

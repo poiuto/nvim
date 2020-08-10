@@ -5,6 +5,8 @@ if has('termguicolors')   " enable true color
 endif
 set background=dark
 highlight Normal ctermbg=None
+let g:gruvbox_italic=1
+let g:gruvbox_bold=1
 colorscheme gruvbox
 
 " prettier
@@ -13,7 +15,7 @@ let g:prettier#exec_cmd_async = 1
 let g:prettier#quickfix_auto_focus = 0
 let g:prettier#quickfix_enabled = 0
 let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.ejs,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 set expandtab
 
 " highlight words
@@ -199,10 +201,10 @@ endfunction"}}}
 "}}}
 set laststatus=2  " Basic
 set noshowmode  " Disable show mode info
-augroup lightlineCustom
-  autocmd!
-  autocmd BufWritePost * call lightline_gitdiff#query_git() | call lightline#update()
-augroup END
+"augroup lightlineCustom
+  "autocmd!
+  "autocmd BufWritePost * call lightline_gitdiff#query_git() | call lightline#update()
+"augroup END
 let g:lightline = {}
 let g:lightline = {
       \ 'colorscheme': 'gruvbox',
@@ -215,15 +217,22 @@ let g:lightline#ale#indicator_checking = "\uf110"
 let g:lightline#ale#indicator_warnings = "\uf529"
 let g:lightline#ale#indicator_errors = "\uf00d"
 let g:lightline#ale#indicator_ok = "\uf00c"
-let g:lightline_gitdiff#indicator_added = '+'
-let g:lightline_gitdiff#indicator_deleted = '-'
-let g:lightline_gitdiff#indicator_modified = '*'
-let g:lightline_gitdiff#min_winwidth = '70'
+"let g:lightline_gitdiff#indicator_added = ''
+"let g:lightline_gitdiff#indicator_deleted = ''
+"let g:lightline_gitdiff#indicator_modified = ''
+"let g:lightline_gitdiff#min_winwidth = '70'
+let g:lightline#gitdiff#indicator_added = ''
+let g:lightline#gitdiff#indicator_deleted = ''
+let g:lightline#gitdiff#indicator_modified = ''
+let g:lightline#gitdiff#separator = ' '
 let g:lightline#asyncrun#indicator_none = ''
 let g:lightline#asyncrun#indicator_run = 'Running...'
+"au VimEnter * :hi LightlineRight_tabline_0_1 guifg=#bdae93<CR>
+"au VimEnter * :hi LightlineRight_tabline_0 guibg=#bdae93<CR>
+"au VimEnter * :hi LightlineRight_tabline_0 guifg=#1d2021<CR>
 let g:lightline.active = {
     \ 'left': [ [ 'mode', 'paste' ],
-    \           [ 'readonly', 'filename', 'modified', 'devicons_filetype' ] ],
+    \           [  'readonly', 'filename', 'modified', 'devicons_filetype' ] ],
     \ 'right': [ [ 'lineinfo' ],
     \            [ 'fileformat', 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok', 'pomodoro' ],
     \           [ 'asyncrun_status', 'coc_status' ] ]
@@ -234,8 +243,9 @@ let g:lightline.inactive = {
     \ }
 let g:lightline.tabline = {
     \ 'left': [ [ 'vim_logo', 'tabs' ] ],
-    \ 'right': [ [ 'gitbranch' ],
-    \ [ 'gitstatus' ] ]
+    \ 'right': [ [ 'gitbranch', 'gitdiff' ], ]
+    "\            [ 'gitdiff' ] ]
+    "\            [ 'gitstatus' ] ]
     \ }
 let g:lightline.tab = {
     \ 'active': [ 'tabnum', 'filename', 'modified' ],
@@ -250,13 +260,13 @@ let g:lightline.tab_component_function = {
       \ 'filename': 'lightline#tab#filename',
       \ 'modified': 'lightline#tab#modified',
       \ 'readonly': 'lightline#tab#readonly',
-      \ 'tabnum': 'Tab_num'
+      \ 'tabnum': 'Tab_num',
       \ }
 let g:lightline.component = {
       \ 'artify_gitbranch' : '%{Artify_gitbranch()}',
       \ 'artify_mode': '%{Artify_lightline_mode()}',
       \ 'artify_lineinfo': "%2{Artify_line_percent()}\uf295 %3{Artify_line_num()}:%-2{Artify_col_num()}",
-      \ 'gitstatus' : '%{lightline_gitdiff#get_status()}',
+      "\ 'gitstatus': '%{lightline_gitdiff#get_status()}',
       \ 'bufinfo': '%{bufname("%")}:%{bufnr("%")}',
       \ 'vim_logo': "\ue7c5",
       \ 'pomodoro': '%{PomodoroStatus()}',
@@ -281,7 +291,7 @@ let g:lightline.component = {
       \ 'line': '%l',
       \ 'column': '%c',
       \ 'close': '%999X X ',
-      \ 'winnr': '%{winnr()}'
+      \ 'winnr': '%{winnr()}',
       \ }
 let g:lightline.component_function = {
       \ 'gitbranch': 'Gitbranch',
@@ -295,14 +305,16 @@ let g:lightline.component_expand = {
       \ 'linter_warnings': 'lightline#ale#warnings',
       \ 'linter_errors': 'lightline#ale#errors',
       \ 'linter_ok': 'lightline#ale#ok',
-      \ 'asyncrun_status': 'lightline#asyncrun#status'
+      \ 'asyncrun_status': 'lightline#asyncrun#status',
+      \ 'gitdiff': 'lightline#gitdiff#get',
       \ }
 let g:lightline.component_type = {
       \ 'linter_warnings': 'warning',
-      \ 'linter_errors': 'error'
+      \ 'linter_errors': 'error',
+      "\ 'gitdiff': 'middle',
       \ }
 let g:lightline.component_visible_condition = {
-      \ 'gitstatus': 'lightline_gitdiff#get_status() !=# ""'
+      "\ 'gitstatus': 'lightline_gitdiff#get_status() !=# ""'
       \ }
 "}}}
 " tmux line
@@ -322,7 +334,7 @@ if g:vimIsInTmux == 1
         \'win'  : ['#I', '#W'],
         \'cwin' : ['#I', '#W', '#F'],
         \'x'    : [ "#[fg=blue]#{download_speed} \uf6d9 #{sysstat_cpu}" ],
-        \'y'    : ['%R', '%a', '%m/%d/%Y'],
+        \'y'    : ['%R', '%a', '%m-%d-%Y'],
         \'z'    : '#H #{prefix_highlight}'}
   let g:tmuxline_separators = {
         \ 'left' : "\ue0bc",
@@ -332,11 +344,3 @@ if g:vimIsInTmux == 1
         \ 'space' : ' '}
   au VimEnter * :Tmuxline lightline
 endif
-
-"let g:airline_powerline_fonts = 1
-"let g:airline#extensions#tabline#enabled = 1
-""let g:airline#extensions#tabline#buffer_idx_mode = 1
-"let g:airline#extensions#tabline#show_tabs = 1
-"let g:airline#extensions#tabline#show_tab_nr = 0
-"let g:airline#extensions#tabline#show_tab_type = 0
-"let g:airline#extensions#tabline#show_buffers = 0

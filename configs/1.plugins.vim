@@ -1,19 +1,21 @@
 call plug#begin(base_dir.'/bundle')
 " gruvbox
-Plug 'morhetz/gruvbox'
-Plug 'nvim-treesitter/nvim-treesitter'
-
-" ejs
-"Plug 'briancollins/vim-jst'
+"Plug 'morhetz/gruvbox'
+Plug 'hardcoreplayers/gruvbox9'
+Plug 'chemzqm/vim-jsx-improve'
+"Plug 'nvim-treesitter/nvim-treesitter'
+"Plug 'sheerun/vim-polyglot'
 "Plug 'pangloss/vim-javascript'
+
 
 " lightline
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'mhinz/vim-startify'
-"Plug 'macthecadillac/lightline-gitdiff'
-Plug 'niklaas/lightline-gitdiff'
-Plug 'maximbaz/lightline-ale'
+"Plug 'niklaas/lightline-gitdiff'
+Plug 'macthecadillac/lightline-gitdiff'
+"Plug 'maximbaz/lightline-ale'
+Plug 'josa42/vim-lightline-coc'
 Plug 'albertomontesg/lightline-asyncrun'
 Plug 'rmolin88/pomodoro.vim'
 " tmux line
@@ -27,6 +29,7 @@ Plug 'luochen1990/rainbow'
 
 " surrround
 Plug 'tpope/vim-surround'
+Plug 'wellle/targets.vim'
 
 " fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -39,7 +42,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'Yggdroot/indentLine'
 
 "  ale
-Plug 'dense-analysis/ale'
+"Plug 'dense-analysis/ale'
 
 "  coc.nvim
 Plug 'neoclide/coc.nvim', {'branch': 'release'}

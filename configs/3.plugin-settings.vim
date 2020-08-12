@@ -1,13 +1,16 @@
 " theme
-syntax enable
+syntax on
 if has('termguicolors')   " enable true color
   set termguicolors
 endif
+set t_Co=256
 set background=dark
-highlight Normal ctermbg=None
-let g:gruvbox_italic=1
-let g:gruvbox_bold=1
-colorscheme gruvbox
+"highlight Normal ctermbg=None
+"let g:gruvbox_italic=1
+"let g:gruvbox_bold=1
+let g:gruvbox_filetype_hi_groups = 1
+let g:gruvbox_italic = 1
+colorscheme gruvbox9
 
 " prettier
 let g:prettier#config#config_precedence = 'file-override'
@@ -20,8 +23,6 @@ set expandtab
 
 " highlight words
 let g:Illuminate_delay = 100
-
-"au BufRead,BufNewFile *.ejs      setf javascript.jsx
 
 " rainbow
 let g:rainbow_active = 1
@@ -48,13 +49,9 @@ nnoremap <Space>c :call NERDComment(0,"toggle")<CR>
 vnoremap <Space>c :call NERDComment(0,"toggle")<CR>
 
 " JS config
-let g:javascript_plugin_jsdoc = 1
-let g:polyglot_disabled = ['jsx', 'tsx', 'js', 'ts']
-let g:vim_jsx_pretty_template_tags = ['html', 'jsx', 'tsx']
-
-" coc-explorer
-nmap <Leader>e :CocCommand explorer<CR>
-autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+"let g:javascript_plugin_jsdoc = 1
+"let g:polyglot_disabled = ['jsx', 'tsx', 'js', 'ts']
+"let g:vim_jsx_pretty_template_tags = ['html', 'jsx', 'tsx']
 
 " ,, to trigger emmet
 let g:user_emmet_leader_key=','
@@ -84,8 +81,17 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 " coc press Ctrl + O to jump to a symbol
 nnoremap <C-o> :CocList outline<CR>
+" use <tab> for trigger completion and navigate to next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{StatusDiagnostic()}
+" coc-explorer
+nmap <Leader>e :CocCommand explorer<CR>
+autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+
 
 " gitgutter
 let g:gitgutter_sign_added = ''
@@ -101,7 +107,7 @@ highlight GitGutterDelete guibg=bg
 "highlight GitGutterChange guifg=bg
 "highlight GitGutterDelete guifg=bg
 highlight SignColumn guibg=bg
-highlight SignColumn ctermbg=bg
+"highlight SignColumn ctermbg=bg
 
 " highlighted yank
 let g:highlightedyank_highlight_duration = 500
@@ -122,17 +128,13 @@ nnoremap <silent> <C-f> :Rg<CR>
 nnoremap <silent> <Leader>b :Buffers<CR>
 
 " treesitter
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-    highlight = {
-      enable = true,                    -- false will disable the whole extension
-      disable = { "rust" },        -- list of language that will be disabled
-      custom_captures = {               -- mapping of user defined captures to highlight groups
-        -- ["foo.bar"] = "Identifier"   -- highlight own capture @foo.bar with highlight group "Identifier", see :h nvim-treesitter-query-extensions
-      },
-    }
-}
-EOF
+"lua <<EOF
+"require'nvim-treesitter.configs'.setup {
+    "highlight = {
+      "enable = true,                    -- false will disable the whole extension
+    "}
+"}
+"EOF
 highlight link TSPunctDelimiter Normal
 highlight link TSPunctBracket Normal
 
@@ -201,13 +203,13 @@ endfunction"}}}
 "}}}
 set laststatus=2  " Basic
 set noshowmode  " Disable show mode info
-"augroup lightlineCustom
-  "autocmd!
-  "autocmd BufWritePost * call lightline_gitdiff#query_git() | call lightline#update()
-"augroup END
+augroup lightlineCustom
+  autocmd!
+  autocmd BufWritePost * call lightline_gitdiff#query_git() | call lightline#update()
+augroup END
 let g:lightline = {}
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'gruvbox9',
       \}
 let g:lightline.separator = { 'left': "\ue0b8", 'right': "\ue0be" }
 let g:lightline.subseparator = { 'left': "\ue0b9", 'right': "\ue0b9" }
@@ -217,19 +219,16 @@ let g:lightline#ale#indicator_checking = "\uf110"
 let g:lightline#ale#indicator_warnings = "\uf529"
 let g:lightline#ale#indicator_errors = "\uf00d"
 let g:lightline#ale#indicator_ok = "\uf00c"
-"let g:lightline_gitdiff#indicator_added = ''
-"let g:lightline_gitdiff#indicator_deleted = ''
-"let g:lightline_gitdiff#indicator_modified = ''
-"let g:lightline_gitdiff#min_winwidth = '70'
-let g:lightline#gitdiff#indicator_added = ''
-let g:lightline#gitdiff#indicator_deleted = ''
-let g:lightline#gitdiff#indicator_modified = ''
-let g:lightline#gitdiff#separator = ' '
+let g:lightline_gitdiff#indicator_added = ''
+let g:lightline_gitdiff#indicator_deleted = ''
+let g:lightline_gitdiff#indicator_modified = ''
+let g:lightline_gitdiff#min_winwidth = '70'
+"let g:lightline#gitdiff#indicator_added = ''
+"let g:lightline#gitdiff#indicator_deleted = ''
+"let g:lightline#gitdiff#indicator_modified = ''
+"let g:lightline#gitdiff#separator = ' '
 let g:lightline#asyncrun#indicator_none = ''
 let g:lightline#asyncrun#indicator_run = 'Running...'
-"au VimEnter * :hi LightlineRight_tabline_0_1 guifg=#bdae93<CR>
-"au VimEnter * :hi LightlineRight_tabline_0 guibg=#bdae93<CR>
-"au VimEnter * :hi LightlineRight_tabline_0 guifg=#1d2021<CR>
 let g:lightline.active = {
     \ 'left': [ [ 'mode', 'paste' ],
     \           [  'readonly', 'filename', 'modified', 'devicons_filetype' ] ],
@@ -267,6 +266,7 @@ let g:lightline.component = {
       \ 'artify_mode': '%{Artify_lightline_mode()}',
       \ 'artify_lineinfo': "%2{Artify_line_percent()}\uf295 %3{Artify_line_num()}:%-2{Artify_col_num()}",
       "\ 'gitstatus': '%{lightline_gitdiff#get_status()}',
+      \ 'gitdiff': '%<%{lightline_gitdiff#get_status()}',
       \ 'bufinfo': '%{bufname("%")}:%{bufnr("%")}',
       \ 'vim_logo': "\ue7c5",
       \ 'pomodoro': '%{PomodoroStatus()}',
@@ -301,20 +301,26 @@ let g:lightline.component_function = {
       \ 'coc_currentfunction': 'CocCurrentFunction'
       \ }
 let g:lightline.component_expand = {
-      \ 'linter_checking': 'lightline#ale#checking',
-      \ 'linter_warnings': 'lightline#ale#warnings',
-      \ 'linter_errors': 'lightline#ale#errors',
-      \ 'linter_ok': 'lightline#ale#ok',
+      "\ 'linter_checking': 'lightline#ale#checking',
+      "\ 'linter_warnings': 'lightline#ale#warnings',
+      "\ 'linter_errors': 'lightline#ale#errors',
+      "\ 'linter_ok': 'lightline#ale#ok',
+      \  'linter_warnings': 'lightline#coc#warnings',
+      \  'linter_errors': 'lightline#coc#errors',
+      \  'linter_ok': 'lightline#coc#ok',
       \ 'asyncrun_status': 'lightline#asyncrun#status',
-      \ 'gitdiff': 'lightline#gitdiff#get',
+      "\ 'gitdiff': 'lightline#gitdiff#get',
       \ }
 let g:lightline.component_type = {
-      \ 'linter_warnings': 'warning',
-      \ 'linter_errors': 'error',
+      "\ 'linter_warnings': 'warning',
+      "\ 'linter_errors': 'error',
       "\ 'gitdiff': 'middle',
+      \   'linter_warnings': 'warning',
+      \   'linter_errors': 'error',
+      \   'linter_ok': 'left',
       \ }
 let g:lightline.component_visible_condition = {
-      "\ 'gitstatus': 'lightline_gitdiff#get_status() !=# ""'
+      \ 'gitstatus': 'lightline_gitdiff#get_status() !=# ""'
       \ }
 "}}}
 " tmux line

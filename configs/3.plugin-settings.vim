@@ -145,13 +145,6 @@ highlight link TSPunctBracket Normal
 " :h g:lightline.component
 "}}}
 "{{{functions
-function! PomodoroStatus() abort"{{{
-  if pomo#remaining_time() ==# '0'
-    return "\ue001"
-  else
-    return "\ue003 ".pomo#remaining_time()
-  endif
-endfunction"}}}
 function! CocCurrentFunction()"{{{
   return get(b:, 'coc_current_function', '')
 endfunction"}}}
@@ -215,26 +208,21 @@ let g:lightline.separator = { 'left': "\ue0b8", 'right': "\ue0be" }
 let g:lightline.subseparator = { 'left': "\ue0b9", 'right': "\ue0b9" }
 let g:lightline.tabline_separator = { 'left': "\ue0bc", 'right': "\ue0ba" }
 let g:lightline.tabline_subseparator = { 'left': "\ue0bb", 'right': "\ue0bb" }
-let g:lightline#ale#indicator_checking = "\uf110"
-let g:lightline#ale#indicator_warnings = "\uf529"
-let g:lightline#ale#indicator_errors = "\uf00d"
-let g:lightline#ale#indicator_ok = "\uf00c"
+let g:lightline#coc#indicator_warnings = ""
+let g:lightline#coc#indicator_errors = ""
+let g:lightline#coc#indicator_ok = ""
 let g:lightline_gitdiff#indicator_added = ''
 let g:lightline_gitdiff#indicator_deleted = ''
 let g:lightline_gitdiff#indicator_modified = ''
 let g:lightline_gitdiff#min_winwidth = '70'
-"let g:lightline#gitdiff#indicator_added = ''
-"let g:lightline#gitdiff#indicator_deleted = ''
-"let g:lightline#gitdiff#indicator_modified = ''
-"let g:lightline#gitdiff#separator = ' '
 let g:lightline#asyncrun#indicator_none = ''
 let g:lightline#asyncrun#indicator_run = 'Running...'
 let g:lightline.active = {
     \ 'left': [ [ 'mode', 'paste' ],
     \           [  'readonly', 'filename', 'modified', 'devicons_filetype' ] ],
     \ 'right': [ [ 'lineinfo' ],
-    \            [ 'fileformat', 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok', 'pomodoro' ],
-    \           [ 'asyncrun_status', 'coc_status' ] ]
+    \            [ 'linter_errors', 'linter_warnings', 'linter_ok' ],
+    \           [ 'asyncrun_status', 'coc_status', 'fileformat' ] ]
     \ }
 let g:lightline.inactive = {
     \ 'left': [ [ 'filename' , 'modified', 'devicons_filetype' ]],
@@ -243,8 +231,6 @@ let g:lightline.inactive = {
 let g:lightline.tabline = {
     \ 'left': [ [ 'vim_logo', 'tabs' ] ],
     \ 'right': [ [ 'gitbranch', 'gitdiff' ], ]
-    "\            [ 'gitdiff' ] ]
-    "\            [ 'gitstatus' ] ]
     \ }
 let g:lightline.tab = {
     \ 'active': [ 'tabnum', 'filename', 'modified' ],
@@ -269,7 +255,6 @@ let g:lightline.component = {
       \ 'gitdiff': '%<%{lightline_gitdiff#get_status()}',
       \ 'bufinfo': '%{bufname("%")}:%{bufnr("%")}',
       \ 'vim_logo': "\ue7c5",
-      \ 'pomodoro': '%{PomodoroStatus()}',
       \ 'mode': '%{lightline#mode()}',
       \ 'absolutepath': '%F',
       \ 'relativepath': '%f',
@@ -301,28 +286,20 @@ let g:lightline.component_function = {
       \ 'coc_currentfunction': 'CocCurrentFunction'
       \ }
 let g:lightline.component_expand = {
-      "\ 'linter_checking': 'lightline#ale#checking',
-      "\ 'linter_warnings': 'lightline#ale#warnings',
-      "\ 'linter_errors': 'lightline#ale#errors',
-      "\ 'linter_ok': 'lightline#ale#ok',
       \  'linter_warnings': 'lightline#coc#warnings',
       \  'linter_errors': 'lightline#coc#errors',
       \  'linter_ok': 'lightline#coc#ok',
-      \ 'asyncrun_status': 'lightline#asyncrun#status',
-      "\ 'gitdiff': 'lightline#gitdiff#get',
+      \  'asyncrun_status': 'lightline#asyncrun#status',
       \ }
 let g:lightline.component_type = {
-      "\ 'linter_warnings': 'warning',
-      "\ 'linter_errors': 'error',
-      "\ 'gitdiff': 'middle',
-      \   'linter_warnings': 'warning',
-      \   'linter_errors': 'error',
-      \   'linter_ok': 'left',
+      \  'linter_warnings': 'warning',
+      \  'linter_errors': 'error',
+      \  'linter_ok': 'left',
       \ }
 let g:lightline.component_visible_condition = {
       \ 'gitstatus': 'lightline_gitdiff#get_status() !=# ""'
       \ }
-"}}}
+""}}}
 " tmux line
 if executable('tmux') && filereadable(expand('~/.zshrc')) && $TMUX !=# ''
   let g:vimIsInTmux = 1

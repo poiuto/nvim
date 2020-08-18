@@ -16,4 +16,3 @@ endfor
 " coc.nvim, remember to run these commands
 ":CocInstall coc-json coc-tsserver
 ":CocInstall coc-explorer
-":TSInstall javascript
